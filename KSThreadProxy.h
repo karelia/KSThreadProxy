@@ -2,8 +2,8 @@
 //  KSThreadProxy.h
 //  Marvel
 //
-//  Created by Mike on 14/10/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Created by Mike Abdullah on 14/10/2008.
+//  Copyright 2008-2010 Karelia Software. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
