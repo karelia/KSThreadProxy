@@ -149,6 +149,8 @@
 
 @implementation KSRunOperationOnThreadOperation
 
+static void *sIsReadyObservationContext = &sIsReadyObservationContext;
+
 - (id)initWithOperation:(NSOperation *)operation thread:(NSThread *)thread;
 {
     OBPRECONDITION(operation);
@@ -157,6 +159,11 @@
     {
         _operation = [operation retain];
         _thread = [_thread retain];
+        
+        [_operation addObserver:self
+                     forKeyPath:@"isReady"
+                        options:NSKeyValueObservingOptionPrior
+                        context:sIsReadyObservationContext];
     }
     
     return self;
@@ -164,6 +171,8 @@
 
 - (void)dealloc
 {
+    [_operation removeObserver:self forKeyPath:@"isReady"];
+    
     [_operation release];
     [_thread release];
     
@@ -176,6 +185,8 @@
 {
     [(NSOperation *)[_operation ks_proxyOnThread:_thread waitUntilDone:NO] start];
 }
+
+#pragma mark Readiness
 
 - (BOOL)isReady
 {
@@ -191,6 +202,25 @@
     }
     
     return result;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
+{
+    if (context == sIsReadyObservationContext)
+    {
+        if ([[change objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue])
+        {
+            [self willChangeValueForKey:@"isReady"];
+        }
+        else
+        {
+            [self didChangeValueForKey:@"isReady"];
+        }
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 @end
