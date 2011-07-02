@@ -50,7 +50,7 @@
 #pragma mark -
 
 
-@interface KSRunOperationOnThreadOperation : NSOperation
+@interface KSPerformOnThreadOperation : NSOperation
 {
   @private
     NSOperation *_operation;
@@ -62,7 +62,7 @@
 
 @property(nonatomic, retain, readonly) NSOperation *targetOperation;
 
-// A KSRunOperationOnThreadOperation is only ready once the operation it contains is
+// A KSPerformOnThreadOperation is only ready once the operation it contains is
 - (BOOL)isReady;
 
 @end

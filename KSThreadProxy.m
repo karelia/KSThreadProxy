@@ -147,7 +147,7 @@
 #pragma mark -
 
 
-@implementation KSRunOperationOnThreadOperation
+@implementation KSPerformOnThreadOperation
 
 static void *sIsReadyObservationContext = &sIsReadyObservationContext;
 
