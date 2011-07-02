@@ -8,6 +8,8 @@
 
 #import "KSPerformOnThreadOperation.h"
 
+#import "KSThreadProxy.h"
+
 
 @implementation KSPerformOnThreadOperation
 
