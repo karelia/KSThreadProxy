@@ -144,3 +144,55 @@
 @end
 
 
+#pragma mark -
+
+
+@implementation KSRunOperationOnThreadOperation
+
+- (id)initWithOperation:(NSOperation *)operation thread:(NSThread *)thread;
+{
+    OBPRECONDITION(operation);
+    
+    if (self = [self init])
+    {
+        _operation = [operation retain];
+        _thread = [_thread retain];
+    }
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [_operation release];
+    [_thread release];
+    
+    [super dealloc];
+}
+
+@synthesize targetOperation = _operation;
+
+- (void)main
+{
+    [(NSOperation *)[_operation ks_proxyOnThread:_thread waitUntilDone:NO] start];
+}
+
+- (BOOL)isReady
+{
+    return [super isReady] && [_operation isReady];
+}
++ (NSSet *)keyPathsForValuesAffectingIsReady;
+{
+    NSSet *result = [NSSet setWithObject:@"targetOperation.isReady"];
+    
+    if ([NSOperation respondsToSelector:_cmd])
+    {
+        result = [result setByAddingObjectsFromSet:[NSOperation performSelector:_cmd]];
+    }
+    
+    return result;
+}
+
+@end
+
+
