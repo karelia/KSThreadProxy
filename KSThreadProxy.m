@@ -113,7 +113,7 @@
 
 @implementation NSObject (KSThreadProxy)
 
-/*  If the specified thead and the current thread are the same, returns self without
+/*  If the specified thread and the current thread are the same, returns self without
  *  creating a proxy object.
  *  For convenience, you can use nil to represent the main thread.
  */
