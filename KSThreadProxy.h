@@ -47,3 +47,5 @@
 @end
 
 
+// Just for fun, a macro that gives you a proxy to NSWorkspace on the main thread
+#define KSWORKSPACETHREADPROXY [[[NSWorkspace ks_proxyOnThread:nil] sharedWorkspace] ks_proxyOnThread:nil]
