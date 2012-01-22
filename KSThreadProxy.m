@@ -144,3 +144,22 @@
 @end
 
 
+#pragma mark - 
+
+
+#ifdef NS_BLOCKS_AVAILABLE
+@implementation NSThread (KSThreadProxy)
+
+- (void)ks_executeBlock:(void (^)())block;
+{
+    block();
+}
+
+- (void)ks_performBlockAndWait:(void (^)())block;
+{
+    [self performSelector:@selector(ks_executeBlock:) onThread:self withObject:block waitUntilDone:YES];
+}
+
+@end
+#endif
+

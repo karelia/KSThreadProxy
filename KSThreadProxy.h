@@ -49,3 +49,14 @@
 
 // Just for fun, a macro that gives you a proxy to NSWorkspace on the main thread
 #define KSWORKSPACETHREADPROXY [[[NSWorkspace ks_proxyOnThread:nil] sharedWorkspace] ks_proxyOnThread:nil]
+
+
+#ifdef NS_BLOCKS_AVAILABLE
+@interface NSThread (KSThreadProxy)
+
+// Like dispatch_sync, but copes with the current thread being the same as the one targeted
+// Think of it is as a modern equivelant to -performSelector:onThread:withObject:waitUntilDone:
+- (void)ks_performBlockAndWait:(void (^)())block;
+
+@end
+#endif
