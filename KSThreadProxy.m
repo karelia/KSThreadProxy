@@ -155,6 +155,13 @@
     block();
 }
 
+- (void)ks_performBlock:(void (^)())block;
+{
+    block = [block copy];
+    [self performSelector:@selector(ks_executeBlock:) onThread:self withObject:block waitUntilDone:NO];
+    [block release];
+}
+
 - (void)ks_performBlockAndWait:(void (^)())block;
 {
     [self performSelector:@selector(ks_executeBlock:) onThread:self withObject:block waitUntilDone:YES];

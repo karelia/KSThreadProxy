@@ -54,8 +54,9 @@
 #ifdef NS_BLOCKS_AVAILABLE
 @interface NSThread (KSThreadProxy)
 
-// Like dispatch_sync, but copes with the current thread being the same as the one targeted
+// Like dispatch_async and dispatch_sync, but copes with the current thread being the same as the one targeted
 // Think of it is as a modern equivelant to -performSelector:onThread:withObject:waitUntilDone:
+- (void)ks_performBlock:(void (^)())block;
 - (void)ks_performBlockAndWait:(void (^)())block;
 
 @end
