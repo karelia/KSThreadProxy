@@ -150,21 +150,16 @@
 #ifdef NS_BLOCKS_AVAILABLE
 @implementation NSThread (KSThreadProxy)
 
-- (void)ks_executeBlock:(void (^)())block;
-{
-    block();
-}
-
 - (void)ks_performBlock:(void (^)())block;
 {
     block = [block copy];
-    [self performSelector:@selector(ks_executeBlock:) onThread:self withObject:block waitUntilDone:NO];
+    [block performSelector:@selector(invoke) onThread:self withObject:nil waitUntilDone:NO];
     [block release];
 }
 
 - (void)ks_performBlockAndWait:(void (^)())block;
 {
-    [self performSelector:@selector(ks_executeBlock:) onThread:self withObject:block waitUntilDone:YES];
+    [block performSelector:@selector(invoke) onThread:self withObject:nil waitUntilDone:YES];
 }
 
 @end
