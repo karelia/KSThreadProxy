@@ -59,5 +59,13 @@
 - (void)ks_performBlock:(void (^)())block;
 - (void)ks_performBlockAndWait:(void (^)())block;
 
+// As above, but allowing the caller to specify the run mode to run on.
+- (void)ks_performUsingMode:(NSString*)mode block:(void (^)(void))block;
+- (void)ks_performAndWaitUsingMode:(NSString*)mode block:(void (^)(void))block;
+
+// As above, but allowing multiple run modes
+- (void)ks_performUsingModes:(NSArray*)modes block:(void (^)(void))block;
+- (void)ks_performAndWaitUsingModes:(NSArray*)modes block:(void (^)(void))block;
+
 @end
 #endif

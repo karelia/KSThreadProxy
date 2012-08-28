@@ -162,6 +162,30 @@
     [block performSelector:@selector(invoke) onThread:self withObject:nil waitUntilDone:YES];
 }
 
+- (void)ks_performUsingMode:(NSString*)mode block:(void (^)(void))block
+{
+    block = [block copy];
+    [block performSelector:@selector(invoke) onThread:self withObject:nil waitUntilDone:NO modes:[NSArray arrayWithObject:mode]];
+    [block release];
+}
+
+- (void)ks_performAndWaitUsingMode:(NSString*)mode block:(void (^)(void))block
+{
+    [block performSelector:@selector(invoke) onThread:self withObject:nil waitUntilDone:YES modes:[NSArray arrayWithObject:mode]];
+}
+
+- (void)ks_performUsingModes:(NSArray*)modes block:(void (^)(void))block
+{
+    block = [block copy];
+    [block performSelector:@selector(invoke) onThread:self withObject:nil waitUntilDone:NO modes:modes];
+    [block release];
+}
+
+- (void)ks_performAndWaitUsingModes:(NSArray*)modes block:(void (^)(void))block
+{
+    [block performSelector:@selector(invoke) onThread:self withObject:nil waitUntilDone:YES modes:modes];
+}
+
 @end
 #endif
 
