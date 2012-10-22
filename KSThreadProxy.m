@@ -152,38 +152,38 @@
 
 - (void)ks_performBlock:(void (^)())block;
 {
-    block = [block copy];
-    [block performSelector:@selector(invoke) onThread:self withObject:nil waitUntilDone:NO];
-    [block release];
+    NSOperation *op = [NSBlockOperation blockOperationWithBlock:block];
+    [op performSelector:@selector(start) onThread:self withObject:nil waitUntilDone:NO];
 }
 
 - (void)ks_performBlockAndWait:(void (^)())block;
 {
-    [block performSelector:@selector(invoke) onThread:self withObject:nil waitUntilDone:YES];
+    NSOperation *op = [NSBlockOperation blockOperationWithBlock:block];
+    [op performSelector:@selector(start) onThread:self withObject:nil waitUntilDone:YES];
 }
 
 - (void)ks_performUsingMode:(NSString*)mode block:(void (^)(void))block
 {
-    block = [block copy];
-    [block performSelector:@selector(invoke) onThread:self withObject:nil waitUntilDone:NO modes:[NSArray arrayWithObject:mode]];
-    [block release];
+    NSOperation *op = [NSBlockOperation blockOperationWithBlock:block];
+    [op performSelector:@selector(start) onThread:self withObject:nil waitUntilDone:NO modes:[NSArray arrayWithObject:mode]];
 }
 
 - (void)ks_performAndWaitUsingMode:(NSString*)mode block:(void (^)(void))block
 {
-    [block performSelector:@selector(invoke) onThread:self withObject:nil waitUntilDone:YES modes:[NSArray arrayWithObject:mode]];
+    NSOperation *op = [NSBlockOperation blockOperationWithBlock:block];
+    [op performSelector:@selector(start) onThread:self withObject:nil waitUntilDone:YES modes:[NSArray arrayWithObject:mode]];
 }
 
 - (void)ks_performUsingModes:(NSArray*)modes block:(void (^)(void))block
 {
-    block = [block copy];
-    [block performSelector:@selector(invoke) onThread:self withObject:nil waitUntilDone:NO modes:modes];
-    [block release];
+    NSOperation *op = [NSBlockOperation blockOperationWithBlock:block];
+    [op performSelector:@selector(start) onThread:self withObject:nil waitUntilDone:NO modes:modes];
 }
 
 - (void)ks_performAndWaitUsingModes:(NSArray*)modes block:(void (^)(void))block
 {
-    [block performSelector:@selector(invoke) onThread:self withObject:nil waitUntilDone:YES modes:modes];
+    NSOperation *op = [NSBlockOperation blockOperationWithBlock:block];
+    [op performSelector:@selector(start) onThread:self withObject:nil waitUntilDone:YES modes:modes];
 }
 
 @end
