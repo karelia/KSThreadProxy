@@ -43,6 +43,11 @@
 @end
 
 
+@interface NSInvocation (KSThreadProxyAdditions)
+- (void)ks_invokeWithTargetAndReportExceptions:(id)target;
+@end
+
+
 @implementation KSThreadProxy
 
 - (id)initWithTarget:(id)target
