@@ -98,15 +98,19 @@
  */
 - (void)ks_invokeWithTargetAndReportExceptions:(id)target
 {
+#if !TARGET_OS_IPHONE
 	@try
     {
+#endif
         [self invokeWithTarget:target];
         [self retainArguments];
+#if !TARGET_OS_IPHONE
     }
     @catch (NSException *exception)
     {
         [NSApp reportException:exception];
     }
+#endif
 }
 
 @end
