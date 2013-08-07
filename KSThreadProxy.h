@@ -36,12 +36,12 @@
 //  Example:
 //  NSString *foo = [[self ks_proxyOnThread:nil] foo];
 //  
-- (id)ks_proxyOnThread:(NSThread *)thread;
+- (instancetype)ks_proxyOnThread:(NSThread *)thread;
 
 //  The default behaviour is to wait until done so that return values can be used. If
 //  targetting a void returning method (or method whose result you don't care about), can
 //  turn off waitUntilDone to avoid blocking.
-- (id)ks_proxyOnThread:(NSThread *)thread waitUntilDone:(BOOL)waitUntilDone;
+- (instancetype)ks_proxyOnThread:(NSThread *)thread waitUntilDone:(BOOL)waitUntilDone;
 
 @end
 
