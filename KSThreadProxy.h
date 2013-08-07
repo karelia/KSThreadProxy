@@ -29,18 +29,28 @@
 
 @interface NSObject (KSThreadProxy)
 
-//  Any messages sent to the returned proxy object are neatly forwarded onto the
-//  real object using the desired thread. You'll even get the return value back properly.
-//  For convenience, can specify nil to target the main thread.
-//
-//  Example:
-//  NSString *foo = [[self ks_proxyOnThread:nil] foo];
-//  
+/**
+ Creates a proxy for the receiver that executes messages on a given thread.
+ 
+ Message forwarding is performed synchronously so the proxy will given correct
+ return values.
+ 
+ @param thread The thread to forward messages onto. Use `nil` as a convenience for the main thread.
+ @return A proxy for the receiver that forwards messages onto `thread`.
+*/
 - (instancetype)ks_proxyOnThread:(NSThread *)thread;
 
-//  The default behaviour is to wait until done so that return values can be used. If
-//  targetting a void returning method (or method whose result you don't care about), can
-//  turn off waitUntilDone to avoid blocking.
+/**
+ Creates a proxy for the receiver that executes messages on a given thread.
+ 
+ Behaves the same as `-ks_proxyOnThread:` unless `waitUntilDone` is `NO`. In
+ which case, message forwarding becomes asynchronous, and all messages sent to
+ the proxy should have their return vaue ignored.
+ 
+ @param thread The thread to forward messages onto. Use `nil` as a convenience for the main thread.
+ @param waitUntilDone `YES` for synchronous message forwarding; `NO` for asynchronous.
+ @return A proxy for the receiver that forwards messages onto `thread`.
+ */
 - (instancetype)ks_proxyOnThread:(NSThread *)thread waitUntilDone:(BOOL)waitUntilDone;
 
 @end
@@ -54,8 +64,23 @@
 @interface NSThread (KSThreadProxy)
 
 // Like dispatch_async and dispatch_sync, but copes with the current thread being the same as the one targeted
-// Think of it is as a modern equivelant to -performSelector:onThread:withObject:waitUntilDone:
+// Think of it is as a modern equivalent to -performSelector:onThread:withObject:waitUntilDone:
+
+/**
+ Asynchronously performs a block on the receiving thread.
+ 
+ @param block The block to perform.
+ */
 - (void)ks_performBlock:(void (^)())block;
+
+/**
+ Synchronously performs a block on the receiving thread.
+ 
+ Unlike `dispatch_sync`, copes with the current thread being the same as the one
+ targeted, but immediately executing the block.
+ 
+ @param block The block to perform.
+ */
 - (void)ks_performBlockAndWait:(void (^)())block;
 
 // As above, but allowing the caller to specify the run mode to run on.
