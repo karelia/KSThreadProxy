@@ -71,7 +71,7 @@
  
  @param block The block to perform.
  */
-- (void)ks_performBlock:(void (^)())block;
+- (void)ks_performBlock:(void (^)())block __attribute((nonnull(1)));
 
 /**
  Synchronously performs a block on the receiving thread.
@@ -81,15 +81,15 @@
  
  @param block The block to perform.
  */
-- (void)ks_performBlockAndWait:(void (^)())block;
+- (void)ks_performBlockAndWait:(void (^)())block __attribute((nonnull(1)));
 
 // As above, but allowing the caller to specify the run mode to run on.
-- (void)ks_performUsingMode:(NSString*)mode block:(void (^)(void))block;
-- (void)ks_performAndWaitUsingMode:(NSString*)mode block:(void (^)(void))block;
+- (void)ks_performUsingMode:(NSString*)mode block:(void (^)(void))block __attribute((nonnull(2)));
+- (void)ks_performAndWaitUsingMode:(NSString*)mode block:(void (^)(void))block __attribute((nonnull(2)));
 
 // As above, but allowing multiple run modes
-- (void)ks_performUsingModes:(NSArray*)modes block:(void (^)(void))block;
-- (void)ks_performAndWaitUsingModes:(NSArray*)modes block:(void (^)(void))block;
+- (void)ks_performUsingModes:(NSArray*)modes block:(void (^)(void))block __attribute((nonnull(2)));
+- (void)ks_performAndWaitUsingModes:(NSArray*)modes block:(void (^)(void))block __attribute((nonnull(2)));
 
 @end
 #endif
